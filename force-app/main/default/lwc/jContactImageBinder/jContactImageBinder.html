@@ -1,0 +1,52 @@
+<template>
+    <lightning-quick-action-panel title="画像ファイルの紐づけ">
+        <div class="slds-p-around_medium slds-grid slds-grid_vertical slds-grow">
+
+            <!-- 現在の紐づけ表示 -->
+            <template if:true={currentDocId}>
+                <div class="slds-text-body_small slds-m-bottom_small">
+                    現在: {currentDocId}
+                </div>
+            </template>
+            <template if:false={currentDocId}>
+                <div class="slds-text-body_small slds-m-bottom_small">
+                    現在: （未紐づけ）
+                </div>
+            </template>
+
+            <!-- ファイル一覧 -->
+            <lightning-datatable key-field="contentDocumentId"
+                                 data={rows}
+                                 columns={columns}
+                                 selected-rows={selectedRowKeys}
+                                 onrowselection={handleRowSelection}
+                                 max-row-selection="1"
+                                 class="slds-grow">
+            </lightning-datatable>
+
+            <!-- ちょいメモ -->
+            <div class="slds-text-color_weak slds-text-body_small slds-m-top_x-small">
+                ※候補には、この取引先責任者に既に関連付いたファイルだけが表示されます。<br/>
+                先に［ファイル］から画像をアップロードしてからお選びください。
+            </div>
+        </div>
+
+        <div slot="footer">
+            <lightning-button label="紐づけ解除"
+                              variant="destructive-text"
+                              onclick={handleUnlink}
+                              class="slds-m-right_x-small">
+            </lightning-button>
+            <lightning-button label="キャンセル"
+                              variant="neutral"
+                              onclick={handleCancel}
+                              class="slds-m-right_x-small">
+            </lightning-button>
+            <lightning-button label="紐づけ"
+                              variant="brand"
+                              onclick={handleBind}
+                              disabled={bindDisabled}>
+            </lightning-button>
+        </div>
+    </lightning-quick-action-panel>
+</template>
